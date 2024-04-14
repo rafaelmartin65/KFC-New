@@ -36,6 +36,15 @@ fetch('familias.json')
 })
 
 // --------------------------------------------
+// Evento listener cambio tamaño pantalla
+// --------------------------------------------
+
+window.addEventListener('resize', () => {
+    calculoElementosPorPagina();
+});
+
+
+// --------------------------------------------
 // Carga filtros de familas disponibles
 // --------------------------------------------
 
@@ -82,7 +91,7 @@ function paginador(productos, actual) {
         totalPaginas = paginas; 
     }
 
-    // controlamos activación de botones anteerior y siguiente
+    // controlamos activación de botones anterior y siguiente
     if (actual == 1) {
         document.getElementById("liAnterior").classList.add("disabled");
     }else{
@@ -137,3 +146,47 @@ function actual() {
         }
     }
 }
+
+// --------------------------------------------
+// Carga productos en pantalla
+// --------------------------------------------
+
+function cargaProductos(producto, idioma) {
+    let tarjeta = document.createElement("div");
+    tarjeta.classList.add("card", "max-1");
+    tarjeta.style = "width: 15rem";
+    
+    let foto = document.createElement("img");
+    foto.src = `./imagenes/${producto.codigo}.jpg`;
+    foto.classList.add("card-img-top", "img-fluid");
+    tarjeta.appendChild(foto);
+
+    let cuerpo = document.createElement("div");
+    cuerpo.classList.add("card-body", "py-0");
+    let entries = Object.entries(producto);
+    let fragmento = new DocumentFragment();
+    entries.forEach(([key, value]) => {
+        if (key != "codigo") {
+            if (key == "descripcion") {
+                let titulo = document.createElement("h5");
+                titulo.classList.add("my-0");
+                titulo.innerHTML = `${datos[idioma][key]}: ${value}`;
+                cuerpo.appendChild(titulo);
+            }else{
+                let etiqueta = document.createElement("p");
+                etiqueta.classList.add("my-0");
+                if (key == "familia") {
+                    etiqueta.innerHTML = `<b>${datos[idioma][key]}</b>: ${datosFamilia[idioma][value]}`;
+                }else{
+                    etiqueta.innerHTML = `<b>${datos[idioma][key]}</b>: ${value}`;
+                }
+                fragmento.appendChild(etiqueta);
+            }
+        }
+    });
+    cuerpo.appendChild(fragmento);
+    tarjeta.appendChild(cuerpo);
+    document.getElementById("listado").appendChild(tarjeta);
+
+}
+
