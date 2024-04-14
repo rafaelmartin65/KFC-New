@@ -1,0 +1,43 @@
+{
+    "español": 
+      {
+        "0":"Todas",
+        "1":"Bebidas",
+        "2":"Postres",
+        "3":"Complementos",
+        "4":"Salsas",
+        "5":"Menu",
+        "6":"Hamburguesas",
+        "7":"Menu para 2",
+        "8":"Menu para 3",
+        "9":"Menu para 4"
+      }
+    ,
+    "ingles": 
+      {
+        "0":"All",
+        "1":"Drinks",
+        "2":"Desserts",
+        "3":"Complements",
+        "4":"Sauces",
+        "5":"Menu",
+        "6":"Burguers",
+        "7":"Menu for 2",
+        "8":"Menu for 3",
+        "9":"Menu for 4"
+      }
+    ,
+    "aleman": 
+      {
+        "0":"Alle",
+        "1":"Getränke",
+        "2":"Nachspeisen",
+        "3":"Zubehör",
+        "4":"Soßen",
+        "5":"Menü",
+        "6":"Burguers",
+        "7":"Menü für 2",
+        "8":"Menü für 3",
+        "9":"Menü für 4"
+      }
+  }
