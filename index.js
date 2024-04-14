@@ -58,3 +58,24 @@ function calculoElementosPorPagina(){
     cargarPaginas(datos.productos, actual());
     return parseInt(size);
 }
+
+// --------------------------------------------
+// Paginador
+// --------------------------------------------
+
+function paginador(productos, actual) {
+    let paginas = productos.length / elementosPorPagina;
+}
+
+
+// --------------------------------------------
+// Función actual
+// --------------------------------------------
+function actual() {
+    const paginas = document.getElementById("paginas");
+    for (const child of paginas.childNodes) {
+        if (Array.from(child.classList).includes("active")) {
+            return parseInt(child.firstChild.innerText);
+        }
+    }
+}
