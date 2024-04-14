@@ -79,7 +79,7 @@ document.getElementById("familias").addEventListener("change", (event) => {
     paginador(productosFiltrados, 1);
   });
 
-  
+
 // --------------------------------------------
 // Calcular los elementos por página
 // --------------------------------------------
@@ -270,7 +270,34 @@ function cargaPagina(event) {
     cargarPaginas(productosFiltrados, event.target.text);
 }
 
-// --------------------------------------------
-// Cambiamos lista de familias según idiomas
-// --------------------------------------------
-function carga
+// -----------------------------------------------
+// Cambiamos la lista de familias segun idioma
+// -----------------------------------------------
+function cargaFiltroFamilias(familias){
+    let seleccionada = Math.max(document.getElementById("familias").selectedIndex,0);
+    document.getElementById("familias").innerHTML = "";
+    for (elemento in familias) {
+      let nomFamilia = document.createElement("option");
+      nomFamilia.value = elemento;
+      nomFamilia.innerHTML = familias[elemento];
+      document.getElementById("familias").appendChild(nomFamilia);
+    };
+    document.getElementById("familias").selectedIndex = seleccionada;
+  }
+  // -----------------------------------------------
+  // Se dispara el filtro de familias
+  // -----------------------------------------------
+  document.getElementById("familias").addEventListener("change", (event) => {
+    document.getElementById("listado").innerHTML = "";
+    if (event.target.value == 0) {
+      productosFiltrados = datos.productos;
+      cargaPaginas(datos.productos,1);
+    } else {
+      productosFiltrados = datos.productos.filter(function (P) {
+        return P.familia == event.target.value;
+      });
+      cargaPaginas(productosFiltrados,1);
+    }
+    console.log(productosFiltrados);
+    paginador(productosFiltrados, 1);
+  });
