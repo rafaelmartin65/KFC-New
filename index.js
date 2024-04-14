@@ -1,4 +1,9 @@
-// Define variables
+// Define variables & constantes
+screen = {
+    2: 0,
+    6: 500,
+    10: 900 
+}
 let datos;
 let idiomaActual;
 
@@ -40,4 +45,16 @@ function cargaFiltroFamilias() {
 // Calcular los elementos por página
 // --------------------------------------------
 
+function calculoElementosPorPagina(){
+    //Obtenemos tamaño de pantalla
+    const iw = window.innerWidth;
 
+    //Determinamos tipo de pantalla
+    let size = null;
+    for (let s in screen) {
+        if (iw >= screen[s]) size = s;
+    }
+    paginador(productosFiltrados, actual());
+    cargarPaginas(datos.productos, actual());
+    return parseInt(size);
+}
