@@ -97,7 +97,31 @@ function paginador(productos, actual) {
     }
 
     let fragmento = new DocumentFragment();
-    
+    for (let i = 1; i<= totalPaginas; i++) {
+        let linea = document.createElement("li");
+        let vinculo = document.createElement("a");
+        vinculo.href = "";
+
+        let span = document.createElement("span");
+        span.classList.add("page-link");
+        linea.classList.add("page-item", "mx-3");
+
+        if (i == actual) {
+            linea.classList.add("active");
+            linea.setAttribute("aria-current", "page");
+            span.innerText = i;
+            linea.appendChild(span);
+        }else{
+            vinculo.classList.add("page-link", "naranja");
+            vinculo.innerText = i;
+            vinculo.onclick = cambiaPagina;
+            linea.appendChild(vinculo);
+        }
+
+        fragmento.appendChild(linea);
+    }
+    document.getElementById("paginas").innerHTML = "";
+    document.getElementById("paginas").appendChild(fragmento);
 
 }
 
