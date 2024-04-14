@@ -94,7 +94,7 @@ function calculoElementosPorPagina(){
         if (iw >= screen[s]) size = s;
     }
     paginador(productosFiltrados, actual());
-    cargarPaginas(datos.productos, actual());
+    cargaPaginas(datos.productos, actual());
     return parseInt(size);
 }
 
@@ -121,7 +121,7 @@ function paginador(productos, actual) {
     if (actual == totalPaginas) {
         document.getElementById("liSiguiente").classList.add("disabled");
     }else{
-        docuemnt.getElementById("liSiguiente").classList.remove("disabled");
+        document.getElementById("liSiguiente").classList.remove("disabled");
     }
 
     let fragmento = new DocumentFragment();
@@ -301,3 +301,27 @@ function cargaFiltroFamilias(familias){
     console.log(productosFiltrados);
     paginador(productosFiltrados, 1);
   });
+
+  // -----------------------------------------------
+  // Función cambia página
+  // -----------------------------------------------
+  function cambiaPagina(event){
+    event.preventDefault();
+    paginador(productosFiltrados,event.target.text);
+    cargaPaginas(productosFiltrados,event.target.text);
+  }
+
+  function cargaPaginas(productos,paginaActual){
+    let inicio = (paginaActual-1) * elementosPorPagina;
+    document.getElementById("listado").innerHTML = "";
+    if (inicio + elementosPorPagina > productos.length){
+      final = productos.length;
+    }
+      else
+    {
+      final = inicio + elementosPorPagina;
+    };  
+    for (let i=inicio;i < final;i++){
+      cargaproductos(productos[i], idiomaActual);
+    }
+  }
