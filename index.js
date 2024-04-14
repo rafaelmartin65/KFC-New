@@ -6,7 +6,14 @@ screen = {
 }
 let datos;
 let idiomaActual;
+let productosFiltrados;
+let datosFamilia;
+let totalPaginas;
+let elementosPorPagina = 10;
 
+// --------------------------------------------
+// Carga datos archivo JSON familias
+// --------------------------------------------
 fetch('familias.json')
 .then(response => response.json())
 .then(familias => {
@@ -14,6 +21,10 @@ fetch('familias.json')
     datosFamilia = familias;
     
     cargaFiltroFamilias(familias[idiomaActual]);
+
+    // --------------------------------------------
+    // Carga datos archivo JSON productos
+    // --------------------------------------------
     fetch("KFC.json")
     .then(response => response.json())
     .then(data => {
@@ -65,6 +76,29 @@ function calculoElementosPorPagina(){
 
 function paginador(productos, actual) {
     let paginas = productos.length / elementosPorPagina;
+    if (paginas > Math.trunc(paginas)) {
+        totalPaginas = Math.trunc(paginas) + 1; // si paginas sin decimales es menor se suma 1
+    }else{
+        totalPaginas = paginas; 
+    }
+
+    // controlamos activación de botones anteerior y siguiente
+    if (actual == 1) {
+        document.getElementById("liAnterior").classList.add("disabled");
+    }else{
+        document.getElementById("liAnterior").classList.remove("disabled");
+    }
+
+    // controlamos si estamos en la última página
+    if (actual == totalPaginas) {
+        document.getElementById("liSiguiente").classList.add("disabled");
+    }else{
+        docuemnt.getElementById("liSiguiente").classList.remove("disabled");
+    }
+
+    let fragmento = new DocumentFragment();
+    
+
 }
 
 
