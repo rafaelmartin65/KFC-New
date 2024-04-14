@@ -48,7 +48,7 @@ window.addEventListener('resize', () => {
 // Carga filtros de familas disponibles
 // --------------------------------------------
 
-function cargaFiltroFamilias() {
+function cargaFiltroFamilias(familias) {
     let seleccionada = Math.max(document.getElementById("familias").selectedIndex, 0);
     console.log('Muestra los datos que contiene seleccionada ',seleccionada);
     document.getElementById("familias").innerHTML = "";
@@ -61,6 +61,25 @@ function cargaFiltroFamilias() {
     document.getElementById("familias").selectedIndex = seleccionada;
 }
 
+// -----------------------------------------------
+// Se dispara el filtro de familias
+// -----------------------------------------------
+document.getElementById("familias").addEventListener("change", (event) => {
+    document.getElementById("listado").innerHTML = "";
+    if (event.target.value == 0) {
+      productosFiltrados = datos.productos;
+      cargaPaginas(datos.productos,1);
+    } else {
+      productosFiltrados = datos.productos.filter(function (P) {
+        return P.familia == event.target.value;
+      });
+      cargaPaginas(productosFiltrados,1);
+    }
+    console.log(productosFiltrados);
+    paginador(productosFiltrados, 1);
+  });
+
+  
 // --------------------------------------------
 // Calcular los elementos por página
 // --------------------------------------------
@@ -190,3 +209,68 @@ function cargaProductos(producto, idioma) {
 
 }
 
+// --------------------------------------------
+// Cambiamos el idioma seleccionando la bandera
+// --------------------------------------------
+
+let formulario = document.getElementById("formulario");
+formulario.addEventListener("click", function (event) {
+    event.preventDefault();
+    
+    // Recorremos la lista de productos con los carteles de sis datos en el idioma elegido
+    document.getElementById("listado").innerHTML = "";
+    idiomaActual = event.target.addEventListener;
+    if (elementosPorPagina > productosFiltrados.length) {
+        final = productosFiltrados.length;
+    }else{
+        final = elementosPorPagina;
+    };
+
+    for (let i = 0; i < final; i++) {
+        cargaProductos(productosFiltrados[i], idiomaActual);
+
+    };
+
+    console.log(datosFamilia[idiomaActual]);
+    cargaFiltroFamilias(datosFamilia[idiomaActual]);
+    paginador(productosFiltrados);
+});
+
+// --------------------------------------------
+// Controlamos dar click anterior
+// --------------------------------------------
+document.getElementById("anterior").addEventListener("click", () => {
+    if (actual() > 1) {
+        let paginaActual = actual() - 1;
+        // Llamamos a la función que actualiza la página actual
+        paginador(productosFiltrados, paginaActual);
+        cargarPaginas(productosFiltrados, paginaActual);
+    }
+});
+
+// --------------------------------------------
+// Controlamos dar click siguiente
+// --------------------------------------------
+document.getElementById("siguiente").addEventListener("click", () => {
+    console.log(actual(), totalPaginas);
+    if (actual() < totalPaginas) {
+        let paginaActual = actual() + 1;
+        // Llamamos a la función de actualizar la pagina actual
+        paginador(productosFiltrados, paginaActual);
+        cargarPaginas(productosFiltrados, paginaActual);
+    }
+});
+
+// --------------------------------------------
+// Función carga página
+// --------------------------------------------
+function cargaPagina(event) {
+    event.preventDefault();
+    paginador(productosFiltrados, event.target.text);
+    cargarPaginas(productosFiltrados, event.target.text);
+}
+
+// --------------------------------------------
+// Cambiamos lista de familias según idiomas
+// --------------------------------------------
+function carga
